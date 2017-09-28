@@ -6,3 +6,13 @@ const chatRoomSchema = new mongoose.Schema({
 });
 
 const ChatRoomModel = mongoose.model('chatRoom', chatRoomSchema);
+
+exports.createChatRoom = async address => {
+  const exists = await ChatRoomModel.findOne({address});
+  if (exists !== null) return;
+  const newChatRoom = new ChatRoomModel({
+    address,
+    messages: [],
+  })
+  newChatRoom.save();
+}

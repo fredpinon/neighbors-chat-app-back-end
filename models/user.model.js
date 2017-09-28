@@ -14,3 +14,23 @@ const userSchema = new mongoose.Schema({
 });
 
 const UserModel = mongoose.model('user', userSchema);
+
+exports.saveNewUser = newUserDetails => {
+  const {fname, lname, username, password, address, flat, initials, online} = newUserDetails;
+  const newUser = new UserModel({
+    fname,
+    lname,
+    username,
+    password,
+    address,
+    flat,
+    initials,
+    online,
+    avatar_color: randomColor({luminosity:'light'}),
+  });
+  return newUser.save();
+};
+
+exports.setOnline = username => UserModel.findOneAndUpdate({username}, {$set:{online:true}}, {new:true});
+
+exports.setOffline = username => UserModel.findOneAndUpdate({username}, {$set:{online:false}}, {new:true});
