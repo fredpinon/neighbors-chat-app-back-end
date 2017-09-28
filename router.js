@@ -6,8 +6,8 @@ const userController = require('./controllers/user.controller');
 
 // single user routes
 router.post('/signup', userController.signup);
-
-
+router.post('/login', userController.login);
+router.put('/logout/:username', userController.logOut);
 
 
 

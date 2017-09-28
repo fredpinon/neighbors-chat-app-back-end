@@ -29,4 +29,56 @@ exports.signup = async (req, res) => {
     if (e.message.includes('duplicate')) res.send(JSON.stringify('email already exists'));
     else res.send(JSON.stringify('something went wrong'));
   }
-};
+}
+
+exports.login = async (req, res) => {
+  if (req.token) {
+    try {
+      const decodedToken = await jwt.verify(req.token, secret);
+      const user = await userModel.findUser(decodedToken.username);
+      const toggledActive = await userModel.setOnline(user.username);
+      const details = toggledActive.toObject();
+      delete details.password;
+      res.send({
+        details,
+        token: req.token
+      });
+      res.status(200);
+    } catch (e) {
+      if (e.message === 'jwt expired' || e.message === 'invalid signature') req.token = undefined;
+    }
+  } else {
+    const basicAuth = req.headers.authorization.split(' ')[1];
+    const decodedBasicAuth = Buffer.from(basicAuth, 'base64').toString("ascii");
+    const [username, password] = decodedBasicAuth.split(':');
+    try {
+      let user = await userModel.findUser(username);
+      if (user === null) throw new Error();
+      const matching = await bcrypt.compare(password, user.password);
+      if (matching) {
+        const toggledActive = await userModel.setOnline(user.email);
+        const details = toggledActive.toObject();
+        delete details.password;
+        const token = await jwt.sign({email}, secret, {expiresIn: 2502000});
+        res.send({
+          details,
+          token
+        });
+        res.status(200);
+      } else throw new Error();
+    } catch (e) {
+      res.send(JSON.stringify('wrong credentials'));
+      res.status(401);
+    }
+  }
+}
+
+exports.logOut = async (req, res) => {
+  const username = req.params.username.substr(1);
+  try {
+    await userModel.setOffline(username);
+    res.send(JSON.stringify('user inactive'));
+  } catch (e) {
+    console.log(e);
+  }
+}

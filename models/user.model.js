@@ -34,3 +34,5 @@ exports.saveNewUser = newUserDetails => {
 exports.setOnline = username => UserModel.findOneAndUpdate({username}, {$set:{online:true}}, {new:true});
 
 exports.setOffline = username => UserModel.findOneAndUpdate({username}, {$set:{online:false}}, {new:true});
+
+exports.findUser = username => UserModel.findOne({username});
