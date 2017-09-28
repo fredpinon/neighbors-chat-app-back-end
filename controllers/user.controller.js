@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const userModel = require('../models/user.model');
-const chatRoom = require('../models/chatRoom.model');
+const chatRoomModel = require('../models/chatRoom.model');
 const ctrlHelpers = require('./ctrlHelpers');
 const secret = require('../secret');
 
@@ -15,7 +15,7 @@ exports.signup = async (req, res) => {
   newUserDetails.online = false;
   try {
     await userModel.saveNewUser(newUserDetails);
-    await chatRoom.createChatRoom(newUserDetails.address);
+    await chatRoomModel.createChatRoom(newUserDetails.address);
     const toggledActive = await userModel.setOnline(newUserDetails.username);
     const details = toggledActive.toObject();
     delete details.password;
@@ -101,6 +101,6 @@ exports.search = async (req, res) => {
     return accum;
   }, '')
   .trim();
-  const neighbors = await userModel.findActiveNeighbors(address);
+  const neighbors = await userModel.getAllUsers(address);
   res.send(JSON.stringify(neighbors.length));
 };
