@@ -1,0 +1,36 @@
+{
+  "name": "neighbors-chat-app-back-end",
+  "version": "1.0.0",
+  "description": "look who is active in your building, sign up and join your building's chat room",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fredpinon/neighbors-chat-app-back-end.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fredpinon/neighbors-chat-app-back-end/issues"
+  },
+  "homepage": "https://github.com/fredpinon/neighbors-chat-app-back-end#readme",
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.5",
+    "jsonwebtoken": "^8.0.1",
+    "mongo": "^0.1.0",
+    "mongoose": "^4.11.13",
+    "randomcolor": "^0.5.3",
+    "socket.io": "^2.0.3",
+    "underscore": "^1.8.3"
+  }
+}
