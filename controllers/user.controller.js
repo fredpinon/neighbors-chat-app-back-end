@@ -82,3 +82,15 @@ exports.logOut = async (req, res) => {
     console.log(e);
   }
 }
+
+exports.search = async (req, res) => {
+  const address = Object.keys(req.query);
+  .reduce((accum, item) => {
+    const arr = req.query[item].split('_');
+    accum += `${arr} `;
+    return accum;
+  }, '')
+  .trim();
+  const neighbors = await userModel.findActiveNeighbors(address);
+  res.send(JSON.stringify(neighbors.length));
+};
