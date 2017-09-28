@@ -45,6 +45,7 @@ exports.login = async (req, res) => {
       });
       res.status(200);
     } catch (e) {
+      console.log(e);
       if (e.message === 'jwt expired' || e.message === 'invalid signature') req.token = undefined;
     }
   } else {
@@ -67,6 +68,7 @@ exports.login = async (req, res) => {
         res.status(200);
       } else throw new Error();
     } catch (e) {
+      console.log(e);
       res.send(JSON.stringify('wrong credentials'));
       res.status(401);
     }
@@ -101,6 +103,10 @@ exports.search = async (req, res) => {
     return accum;
   }, '')
   .trim();
-  const neighbors = await userModel.getAllUsers(address);
-  res.send(JSON.stringify(neighbors.length));
+  try {
+    const neighbors = await userModel.getAllUsers(address);
+    res.send(JSON.stringify(neighbors.length));
+  } catch (e) {
+    console.log(e);
+  }
 };

@@ -16,3 +16,19 @@ exports.createChatRoom = async address => {
   })
   newChatRoom.save();
 }
+
+// two following methods are called from socketEvents.js
+exports.createNewMessage = async msgInfo => {
+  const {address, username, message, name} = msgInfo;
+  return ChatRoomModel.findOne({address}).then(chatRoom => {
+    chatRoom.messages.push({
+      from: username,
+      message,
+      name,
+      timestamp: Date.now(),
+    })
+    return chatRoom.save();
+  })
+};
+
+exports.getMessages = async address => await ChatRoomModel.findOne({address});
