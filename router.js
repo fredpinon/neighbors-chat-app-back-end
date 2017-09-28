@@ -10,7 +10,7 @@ router.get('/search', userController.search);
 router.post('/signup', userController.signup);
 router.post('/login', userController.login);
 router.put('/logout/:username', userController.logOut);
-
+router.delete('/deleteUser/:username', userController.deleteUser);
 
 
 

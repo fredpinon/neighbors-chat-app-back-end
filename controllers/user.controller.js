@@ -26,7 +26,7 @@ exports.signup = async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    if (e.message.includes('duplicate')) res.send(JSON.stringify('email already exists'));
+    if (e.message.includes('duplicate')) res.send(JSON.stringify('username already exists'));
     else res.send(JSON.stringify('something went wrong'));
   }
 }
@@ -56,10 +56,10 @@ exports.login = async (req, res) => {
       if (user === null) throw new Error();
       const matching = await bcrypt.compare(password, user.password);
       if (matching) {
-        const toggledActive = await userModel.setOnline(user.email);
+        const toggledActive = await userModel.setOnline(user.username);
         const details = toggledActive.toObject();
         delete details.password;
-        const token = await jwt.sign({email}, secret, {expiresIn: 2502000});
+        const token = await jwt.sign({username}, secret, {expiresIn: 2502000});
         res.send({
           details,
           token
@@ -83,8 +83,18 @@ exports.logOut = async (req, res) => {
   }
 }
 
+exports.deleteUser = async (req, res) => {
+  const username = req.params.username.substr(1);
+  try {
+    const deleted = await userModel.deleteUser(username);
+    res.send(JSON.stringify('removed'));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 exports.search = async (req, res) => {
-  const address = Object.keys(req.query);
+  const address = Object.keys(req.query)
   .reduce((accum, item) => {
     const arr = req.query[item].split('_');
     accum += `${arr} `;

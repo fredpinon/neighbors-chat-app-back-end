@@ -37,4 +37,6 @@ exports.setOffline = username => UserModel.findOneAndUpdate({username}, {$set:{o
 
 exports.findUser = username => UserModel.findOne({username});
 
+exports.deleteUser = username => UserModel.findOneAndRemove({username});
+
 exports.findActiveNeighbors = address => UserModel.find({address});
