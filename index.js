@@ -21,4 +21,4 @@ app.use(async (req, res, next) => {;
 const router = require('./router.js');
 app.use(router);
 
-app.listen(4000, () => console.log('server is running'));
+app.listen(4000, () => console.log('server is running on 4000'));

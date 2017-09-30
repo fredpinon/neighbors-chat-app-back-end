@@ -3,7 +3,7 @@ const mongoose = require('../db.js');
 const chatRoomSchema = new mongoose.Schema({
   address: {type: String, unique: true, required: true},
   messages: {type: Array},
-});
+})
 
 const ChatRoomModel = mongoose.model('chatRoom', chatRoomSchema);
 
@@ -17,7 +17,6 @@ exports.createChatRoom = async address => {
   newChatRoom.save();
 }
 
-// two following methods are called from socketEvents.js
 exports.createNewMessage = async msgInfo => {
   const {address, username, message, name} = msgInfo;
   return ChatRoomModel.findOne({address}).then(chatRoom => {
@@ -29,6 +28,6 @@ exports.createNewMessage = async msgInfo => {
     })
     return chatRoom.save();
   })
-};
+}
 
 exports.getMessages = async address => await ChatRoomModel.findOne({address});
