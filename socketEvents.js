@@ -56,12 +56,5 @@ module.exports = (io) => {
     //     }
     //   });
     // })
-    // socket.on('get-messages', async (address) => {
-    //   const conversation = await chatRoom.getMessages(address);
-    //   socket.emit('action', {
-    //     type: 'GET-MESSAGES',
-    //     data: conversation
-    //   });
-    // })
   });
 }
