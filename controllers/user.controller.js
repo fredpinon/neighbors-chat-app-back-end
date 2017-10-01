@@ -75,7 +75,7 @@ exports.login = async (req, res) => {
   }
 }
 
-exports.logOut = async (req, res) => {
+exports.logout = async (req, res) => {
   const username = req.params.username.substr(1);
   try {
     await userModel.setOffline(username);

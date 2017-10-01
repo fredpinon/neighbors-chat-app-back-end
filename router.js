@@ -10,7 +10,7 @@ router.get('/search', userController.search);
 // single user routes
 router.post('/signup', userController.signup);
 router.post('/login', userController.login);
-router.put('/logout/:username', userController.logOut);
+router.put('/logout/:username', userController.logout);
 router.delete('/deleteUser/:username', userController.deleteUser);
 
 // chat room routes
