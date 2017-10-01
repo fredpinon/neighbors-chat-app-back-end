@@ -17,12 +17,12 @@ exports.createChatRoom = async address => {
   newChatRoom.save();
 }
 
-exports.createNewMessage = async msgInfo => {
-  const {address, username, message, name} = msgInfo;
+exports.createNewMessage = async data => {
+  const {address, username, msg, name} = data;
   return ChatRoomModel.findOne({address}).then(chatRoom => {
     chatRoom.messages.push({
       from: username,
-      message,
+      msg,
       name,
       timestamp: Date.now(),
     })

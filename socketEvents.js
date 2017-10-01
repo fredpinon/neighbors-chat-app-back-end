@@ -16,17 +16,24 @@ module.exports = (io) => {
         data: users
       });
     })
-    // socket.on('new-message', async (msgInfo) => {
-    //   const conversation = await chatRoom.createNewMessage(msgInfo);
-    //   socket.broadcast.to(msgInfo.address).emit('action', {
-    //     type: 'REFRESH_MESSAGES',
-    //     data: conversation
-    //   });
-    //   socket.emit('action', {
-    //     type: 'GET-MESSAGES',
-    //     data: conversation
-    //   });
-    // })
+    socket.on('SOCKET__DISCONNECT', async (address) => {
+      const users = await userModel.getAllUsers(address);
+      socket.broadcast.to(address).emit('ACTION', {
+        type: 'USER_LIST_STATUS_CHANGE',
+        data: users
+      });
+    })
+    socket.on('NEW__MESSAGE', async (data) => {
+      const conversation = await chatRoom.createNewMessage(data);
+      socket.broadcast.to(data.address).emit('ACTION', {
+        type: 'REFRESH_MESSAGES',
+        data: conversation
+      });
+      socket.emit('ACTION', {
+        type: 'GET-MESSAGES',
+        data: conversation
+      });
+    })
     // socket.on('is-typing', async (info) => {
     //   const email = info.email;
     //   const typingUser = `${info.firstname} ${info.lastname}`;
@@ -54,13 +61,6 @@ module.exports = (io) => {
     //   socket.emit('action', {
     //     type: 'GET-MESSAGES',
     //     data: conversation
-    //   });
-    // })
-    // socket.on('user-disconnected', async (address) => {
-    //   const users = await userModel.getAllUsers(address);
-    //   socket.broadcast.to(address).emit('action', {
-    //     type: 'USER_LIST_STATUS_CHANGE',
-    //     data: users
     //   });
     // })
   });
