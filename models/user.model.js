@@ -39,4 +39,4 @@ exports.findUser = username => UserModel.findOne({username});
 
 exports.deleteUser = username => UserModel.findOneAndRemove({username});
 
-exports.getAllUsers = address => UserModel.find({address});
+exports.getAllUsers = address => UserModel.find({address}, {password:0});
