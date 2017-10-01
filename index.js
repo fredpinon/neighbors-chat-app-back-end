@@ -1,11 +1,15 @@
 const express = require('express');
 const app = express();
-
-const cors = require('cors');
-const corsOptions = {origin: ['http://localhost:3000']};
-app.use(cors(corsOptions))
+const Server = require('http').Server;
+const server = Server(app);
+const io = require('socket.io')(server);
 
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const socketEvents = require('./socketEvents');
+const router = require('./router.js');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -18,7 +22,11 @@ app.use(async (req, res, next) => {;
   return await next();
 });
 
-const router = require('./router.js');
+const corsOptions = {origin: ['http://localhost:3000']};
+
+app.use(cors(corsOptions));
+
 app.use(router);
 
-app.listen(4000, () => console.log('server is running on 4000'));
+socketEvents(io);
+server.listen(4000, () => console.log('server running'));
