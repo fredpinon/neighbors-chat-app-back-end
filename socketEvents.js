@@ -34,27 +34,27 @@ module.exports = (io) => {
         data: conversation
       });
     })
-    // socket.on('is-typing', async (info) => {
-    //   const email = info.email;
-    //   const typingUser = `${info.firstname} ${info.lastname}`;
-    //   socket.broadcast.to(info.address).emit('action', {
-    //     type: 'USER-TYPING',
-    //     data: {
-    //       typingUser,
-    //       email,
-    //     }
-    //   });
-    // })
-    // socket.on('stoped-typing', async (info) => {
-    //   const email = info.email;
-    //   const typingUser = `${info.firstname} ${info.lastname}`;
-    //   socket.broadcast.to(info.address).emit('action', {
-    //     type: 'USER-STOPED-TYPING',
-    //     data: {
-    //       typingUser,
-    //       email,
-    //     }
-    //   });
-    // })
+    socket.on('IS_TYPING', async (data) => {
+      const username = data.username;
+      const typingUser = `${data.fname} ${data.lname}`;
+      socket.broadcast.to(data.address).emit('ACTION', {
+        type: 'USER-TYPING',
+        data: {
+          typingUser,
+          username,
+        }
+      });
+    })
+    socket.on('STOPPED_TYPING', async (data) => {
+      const username = data.username;
+      const typingUser = `${data.fname} ${data.lname}`;
+      socket.broadcast.to(data.address).emit('ACTION', {
+        type: 'USER-STOPPED-TYPING',
+        data: {
+          typingUser,
+          username,
+        }
+      });
+    })
   });
 }
