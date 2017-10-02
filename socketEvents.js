@@ -34,6 +34,13 @@ module.exports = (io) => {
         data: conversation
       });
     })
+    socket.on('GET-MESSAGES', async (address) => {
+      const conversation = await chatRoom.getMessages(address);
+      socket.emit('ACTION', {
+        type: 'GET-MESSAGES',
+        data: conversation
+      });
+    })
     socket.on('IS_TYPING', async (data) => {
       const username = data.username;
       const typingUser = `${data.fname} ${data.lname}`;
