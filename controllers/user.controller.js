@@ -89,6 +89,8 @@ exports.deleteUser = async (req, res) => {
   const username = req.params.username.substr(1);
   try {
     const deleted = await userModel.deleteUser(username);
+    const nbOfUsersLeft = await userModel.getAllUsers(deleted.address);
+    if (nbOfUsersLeft.length === 0) await chatRoomModel.deleteChatRoom(deleted.address);
     res.send(JSON.stringify('removed'));
   } catch (e) {
     console.log(e);

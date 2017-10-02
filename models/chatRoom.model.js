@@ -30,4 +30,6 @@ exports.createNewMessage = async data => {
   })
 }
 
+exports.deleteChatRoom = address => ChatRoomModel.findOneAndRemove({address});
+
 exports.getMessages = async address => await ChatRoomModel.findOne({address});
