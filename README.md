@@ -11,7 +11,7 @@ This is the back-end for my neighbors chat app. The front end can be found [here
 * Clone this Repo and cd into it
 * Run `npm install`
 * Run `npm run dev`
-(MongoDB needs to be running)
+* MongoDB also needs to be running
 
 ## Tech Stack
 * Express
