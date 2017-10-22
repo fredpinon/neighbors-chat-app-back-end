@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/neighbors-chat-app');
-
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/neighbors-chat-app', {useMongoClient: true});
 module.exports = mongoose;
