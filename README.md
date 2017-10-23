@@ -11,7 +11,7 @@ This is the back-end for Bubble, an app that allows you to check for active user
 * Clone this repo and cd into it
 * Run `npm install`
 * Run `npm run dev`
-* Clone the [front-end](https://github.com/fredpinon/neighbors-chat-app-front-end) repository and follow installation instruction.
+* Clone the [front-end](https://github.com/fredpinon/neighbors-chat-app-front-end) repository and follow installation instructions.
 
 ## Tech Stack
 * [Express](https://reactjs.org/)
